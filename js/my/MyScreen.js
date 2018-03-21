@@ -27,7 +27,8 @@ export default class App extends Component<Props> {
                 <TouchableOpacity onPress={this._goSetPhone.bind(this)}>
                     <View style={styles.phoneParent}>
                         <Text>手机号：</Text>
-                        <Text>未绑定手机号</Text>
+                        <Text>11111</Text>
+
                         <View style={{flex: 1, flexDirection: 'row-reverse'}}>
                             <Image
                                 source={require('./img/arrow.png')}
@@ -36,6 +37,7 @@ export default class App extends Component<Props> {
 
                     </View>
                 </TouchableOpacity>
+                <Text>11111</Text>
             </View>
         );
     }
@@ -47,9 +49,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5FCFF',
     },
     phoneParent: {
-        flex: 1,
         flexDirection: 'row',
         padding: 24
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
     },
     arrow: {
         height: 20,
