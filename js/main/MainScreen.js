@@ -13,12 +13,13 @@ import {
 import {StackNavigator, TabNavigator} from 'react-navigation';
 
 import NewsScreen from '../news/NewsScreen'
+import NewsDetailScreen from '../news/NewsDetailScreen'
+
 import CardsScreen from '../cards/CardsScreen'
 import MyScreen from '../my/MyScreen'
 
 
 import BindPhoneScreen from '../my/phone/BindPhoneScreen'
-
 
 const styles = StyleSheet.create({
     icon: {
@@ -111,33 +112,36 @@ const MainTabNavigator = TabNavigator({
     }
 });
 
-const MyStackNavigator = StackNavigator({
-    BindPhoneScreen: {
-        screen: BindPhoneScreen,
-        navigationOptions: {
-            headerTitle: '手机号绑定',
-        }
-    },
-}, {
-    navigationOptions: {},
-    headerMode: 'none',
-})
+// const MyStackNavigator = StackNavigator({
+//     BindPhoneScreen: {
+//         screen: BindPhoneScreen,
+//         navigationOptions: {
+//             headerTitle: '手机号绑定',
+//         }
+//     },
+// }, {
+//     navigationOptions: {},
+//     headerMode: 'none',
+// })
 
 const MainStackNavigator = StackNavigator({
     MainTabNavigator: {
         screen: MainTabNavigator,
     },
-    // HomeDetailScreen: {
-    //     screen: HomeDetailScreen,
-    //     navigationOptions: {
-    //         headerTitle: '详情',
-    //     }
-    // },
+    NewsDetailScreen: {
+        screen: NewsDetailScreen,
+        navigationOptions: {
+            headerTitle: '详情',
+        }
+    },
     // PractiseNavi: {
     //     screen: PractiseNavi,
     // },
-    MyStackNavigator: {
-        screen: MyStackNavigator,
+    BindPhoneScreen: {
+        screen: BindPhoneScreen,
+        navigationOptions: {
+            headerTitle: '手机号绑定',
+        }
     },
 
 }, {
