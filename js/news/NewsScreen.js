@@ -137,7 +137,7 @@ export default class App extends Component<Props> {
                     }
                     refreshControl={
                         <RefreshControl
-                            colors={["#9Bd35A", "#689F38"]}
+                            colors={["#03A7FF", "#689F38",'red']}
                             refreshing={this.state.refreshing}
                             onRefresh={this.handleRefresh}
                         />
