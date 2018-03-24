@@ -10,26 +10,29 @@ import {
     Text,
     TouchableWithoutFeedback,
     TouchableHighlight,
+    TouchableOpacity,
     ART,
-    View
+    View,
+    Image,
+    FlatList,
+    RefreshControl,
+    ActivityIndicator,
 } from 'react-native';
 
+import {constants} from "../../network/constants";
+import NewsDetailScreen from '../CardDetaiScreen'
+
 const {Surface, Shape, Path, Group} = ART;
-
 const {width, height} = Dimensions.get('window');
-
-const T_WIDTH = 7;
-const T_HEIGHT = 4;
-
-const COLOR_HIGH = '#00bea9';
+const T_WIDTH = 7;//三角形的宽
+const T_HEIGHT = 4;//三角形的高
+const COLOR_HIGH = constants.baseColor;
 const COLOR_NORMAL = '#6c6c6c';
-
 const LINE = 1 / PixelRatio.get();
 
-class Triangle extends React.Component {
+class Triangle extends React.Component {//三角形
 
     render() {
-
         var path;
         var fill;
         if (this.props.selected) {
@@ -47,7 +50,6 @@ class Triangle extends React.Component {
                 .lineTo(T_WIDTH / 2, T_HEIGHT)
                 .close();
         }
-
         return (
             <Surface width={T_WIDTH} height={T_HEIGHT}>
                 <Shape d={path} stroke="#00000000" fill={fill} strokeWidth={0}/>
@@ -74,18 +76,15 @@ const Subtitle = (props) => {
     let textStyle = props.selected ?
         [styles.tableItemText, styles.highlight, styles.marginHigh] :
         [styles.tableItemText, styles.margin];
-
     let rightTextStyle = props.selected ? [styles.tableItemText, styles.highlight] : styles.tableItemText;
-
     let onPress = () => {
         props.onSelectMenu(props.index, props.subindex, props.data);
     }
-
     return (
         <TouchableHighlight onPress={onPress} underlayColor="#f5f5f5">
             <View style={styles.tableItem}>
                 <View style={styles.row}>
-                    {props.selected && <Check />}
+                    {props.selected && <Check/>}
                     <Text style={textStyle}>{props.data.title}</Text>
                 </View>
                 <Text style={rightTextStyle}>{props.data.subtitle}</Text>
@@ -100,8 +99,6 @@ const Title = (props) => {
         [styles.tableItemText, styles.margin];
 
     let rightTextStyle = props.selected ? [styles.tableItemText, styles.highlight] : styles.tableItemText;
-
-
     let onPress = () => {
         props.onSelectMenu(props.index, props.subindex, props.data);
     }
@@ -109,7 +106,7 @@ const Title = (props) => {
     return (
         <TouchableHighlight onPress={onPress} underlayColor="#f5f5f5">
             <View style={styles.titleItem}>
-                {props.selected && <Check />}
+                {props.selected && <Check/>}
                 <Text style={textStyle}>{props.data.title}</Text>
             </View>
         </TouchableHighlight>
@@ -134,7 +131,6 @@ const Check = () => {
 }
 
 
-
 export default class TopMenu extends Component {
 
     constructor(props) {
@@ -146,8 +142,6 @@ export default class TopMenu extends Component {
         let height = [];
         //最大高度
         var max = parseInt((height - 80) * 0.8 / 43);
-
-
         for (let i = 0, c = array.length; i < c; ++i) {
             let item = array[i];
             top[i] = item.data[item.selectedIndex].title;
@@ -163,12 +157,17 @@ export default class TopMenu extends Component {
             subselected: subselected,
             height: height,
             fadeInOpacity: new Animated.Value(0),
-            selectedIndex: null
+            selectedIndex: null,
+
+            news: [],
+            page: 1,
+            loading: false,
+            refreshing: false,
         };
     }
 
     componentDidMount() {
-
+        this.getNews()
     }
 
     createAnimation = (index, height) => {
@@ -279,7 +278,62 @@ export default class TopMenu extends Component {
                             selected={this.state.selectedIndex === index}/>
                     })}
                 </View>
-                {this.props.renderContent()}
+                {/*{this.props.renderContent()}*/}
+
+                <FlatList
+                    data={this.state.news}
+                    renderItem={({item}) => (
+
+                        <TouchableOpacity onPress={this._itemClick.bind(this, item)}>
+                            <View style={styles.listItem}>
+
+                                <View style={styles.container2}>
+
+                                    <View style={styles.leftContainer}>
+                                        <Text numberOfLines={2} style={styles.title}>{item.shortTitle}</Text>
+                                        <Text style={styles.time}>{item.issueTime}</Text>
+                                    </View>
+
+                                    <Image
+                                        source={{uri: constants.PicUrl + item.thumbPath}}
+                                        style={styles.thumbnail}/>
+                                </View>
+
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                    ItemSeparatorComponent={() =>
+                        <View style={{flex: 1, flexDirection: 'row-reverse'}}>
+                            {/*<View
+                                style={{
+                                    height: 1,
+                                    width: 120,
+                                    backgroundColor: 'white'
+                                }}/>*/}
+                            <View
+                                style={{
+                                    height: 1,
+                                    backgroundColor: "#CED0CE",
+                                }}
+                            />
+
+                        </View>
+                    }
+                    refreshControl={
+                        <RefreshControl
+                            colors={[constants.baseColor]}
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.handleRefresh}
+                        />
+                    }
+                    keyExtractor={(item, index) => index.toString()}
+                    ListHeaderComponent={this.renderHeader}
+                    ListFooterComponent={this.renderFooter}
+                    onEndReached={this.handleLoadMore}
+                    //onEndReachedThreshold={15}
+                />
+
+
                 <View style={styles.bgContainer} pointerEvents={this.state.selectedIndex !== null ? "auto" : "none"}>
                     <Animated.View style={[styles.bg, {opacity: this.state.fadeInOpacity}]}/>
                     {this.props.config.map((d, index) => {
@@ -289,26 +343,88 @@ export default class TopMenu extends Component {
             </View>
         );
     }
+
+
+    //下面的是列表
+    getNews = () => {
+        var url = `${constants.url}?service=news.list&pageNo=${this.state.page}&parent=25`
+        this.setState({loading: true});
+        fetch(url)
+            .then(res => res.json())
+            .then(res => {
+                this.setState({
+                    news: this.state.page === 1 ? res.resultData : [...this.state.news, ...res.resultData],
+                    loading: false,
+                    refreshing: false,
+                });
+            })
+            .catch(error => {
+                this.setState({error, loading: false});
+            });
+    }
+
+    handleRefresh = () => {
+        this.setState(
+            {
+                page: 1,
+                refreshing: true
+            },
+            () => {
+                this.getNews();
+            }
+        );
+    };
+
+    handleLoadMore = () => {
+        this.setState(
+            {
+                page: this.state.page + 1
+            },
+            () => {
+                this.getNews();
+            }
+        );
+    };
+
+    renderFooter = () => {
+        if (!this.state.loading) return null;
+        return (
+            <View
+                style={{
+                    paddingVertical: 20,
+                    borderTopWidth: 1,
+                    borderColor: "#CED0CE"
+                }}>
+                <ActivityIndicator animating size="large"/>
+            </View>
+        );
+    };
+
+    _itemClick = (item) => {
+        this.props.navigation.navigate('NewsDetailScreen', {
+            // newsId: item.newsId,
+        })
+    };
+
+
+
+
 }
 
 const styles = StyleSheet.create({
 
     scroll: {flex: 1, backgroundColor: '#fff'},
-    bgContainer: {position: 'absolute', top: 40, width: width, height: height},
+    bgContainer: {position: 'absolute', top: 48, width: width, height: height},
     bg: {flex: 1, backgroundColor: 'rgba(50,50,50,0.2)'},
     content: {
         position: 'absolute',
         width: width
     },
-
     highlight: {
         color: COLOR_HIGH
     },
-
     marginHigh: {marginLeft: 10},
     margin: {marginLeft: 28},
-
-
     titleItem: {
         height: 43,
         alignItems: 'center',
@@ -318,7 +434,6 @@ const styles = StyleSheet.create({
         borderBottomColor: '#eee',
         flexDirection: 'row',
     },
-
     tableItem: {
         height: 43,
         alignItems: 'center',
@@ -352,11 +467,51 @@ const styles = StyleSheet.create({
     },
     topMenu: {
         flexDirection: 'row',
-        height: 40,
+        height: 48,
         borderTopWidth: LINE,
         borderTopColor: '#bdbdbd',
         borderBottomWidth: 1,
         borderBottomColor: '#f2f2f2'
     },
+
+    //
+    listItem: {
+        flex: 1,
+        flexDirection: 'column',
+    },
+    container2: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 12,
+        paddingBottom: 12
+    },
+    leftContainer: {
+        flex: 1,
+    },
+    title: {
+        color: '#333333',
+        fontSize: 16,
+        marginBottom: 8,
+        textAlign: 'left',
+    },
+    time: {
+        color: '#999999',
+        marginTop: 8,
+        fontSize: 12,
+        textAlign: 'left'
+    },
+    thumbnail: {
+        width: 120,
+        height: 80,
+    },
+    listView: {
+        backgroundColor: '#FFFFFF',
+    },
+
 
 });

@@ -137,7 +137,7 @@ export default class App extends Component<Props> {
                     }
                     refreshControl={
                         <RefreshControl
-                            colors={["#03A7FF", "#689F38",'red']}
+                            colors={[constants.baseColor]}
                             refreshing={this.state.refreshing}
                             onRefresh={this.handleRefresh}
                         />
@@ -198,12 +198,4 @@ const styles = StyleSheet.create({
     },
 });
 
-function _generateUUID() {
-    var d = new Date().getTime();
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = (d + Math.random() * 16) % 16 | 0;
-        d = Math.floor(d / 16);
-        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-    return uuid;
-};
+

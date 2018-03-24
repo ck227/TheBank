@@ -16,10 +16,13 @@ import NewsScreen from '../news/NewsScreen'
 import NewsDetailScreen from '../news/NewsDetailScreen'
 
 import CardsScreen from '../cards/CardsScreen'
+import CardDetailScreen from '../cards/CardDetaiScreen'
+
+
 import MyScreen from '../my/MyScreen'
-
-
 import BindPhoneScreen from '../my/phone/BindPhoneScreen'
+
+import {constants} from "../network/constants";
 
 const styles = StyleSheet.create({
     icon: {
@@ -36,7 +39,7 @@ const MainTabNavigator = TabNavigator({
             tabBarLabel: '线上特惠',
             headerLeft: null,//去左边返回键
             headerStyle: {
-                backgroundColor: '#03A7FF',
+                backgroundColor: constants.baseColor,
             },
             headerTitleStyle: {
                 color: 'white'
@@ -58,7 +61,7 @@ const MainTabNavigator = TabNavigator({
             tabBarLabel: '金融产品',
             headerLeft: null,
             headerStyle: {
-                backgroundColor: '#03A7FF',
+                backgroundColor: constants.baseColor,
             },
             headerTitleStyle: {
                 color: 'white'
@@ -79,7 +82,7 @@ const MainTabNavigator = TabNavigator({
             tabBarLabel: '我的',
             headerLeft: null,//去左边返回键
             headerStyle: {
-                backgroundColor: '#03A7FF',
+                backgroundColor: constants.baseColor,
             },
             headerTitleStyle: {
                 color: 'white'
@@ -98,7 +101,7 @@ const MainTabNavigator = TabNavigator({
     animationEnabled: false,
     swipeEnabled: false,
     tabBarOptions: {
-        activeTintColor: '#46bafe',
+        activeTintColor: constants.baseColor,
         inactiveTintColor: '#6a7084',
         showLabel: true,
         showIcon: true,
@@ -112,17 +115,17 @@ const MainTabNavigator = TabNavigator({
     }
 });
 
-// const MyStackNavigator = StackNavigator({
-//     BindPhoneScreen: {
-//         screen: BindPhoneScreen,
-//         navigationOptions: {
-//             headerTitle: '手机号绑定',
-//         }
-//     },
-// }, {
-//     navigationOptions: {},
-//     headerMode: 'none',
-// })
+const CardStackNavigator = StackNavigator({
+    CardDetailScreen: {
+        screen: CardDetailScreen,
+        navigationOptions: {
+            headerTitle: '银行卡详情',
+        }
+    },
+}, {
+    navigationOptions: {},
+    headerMode: 'none',
+})
 
 const MainStackNavigator = StackNavigator({
     MainTabNavigator: {
@@ -134,9 +137,9 @@ const MainStackNavigator = StackNavigator({
             headerTitle: '详情',
         }
     },
-    // PractiseNavi: {
-    //     screen: PractiseNavi,
-    // },
+    CardStackNavigator: {
+        screen: CardStackNavigator,
+    },
     BindPhoneScreen: {
         screen: BindPhoneScreen,
         navigationOptions: {
