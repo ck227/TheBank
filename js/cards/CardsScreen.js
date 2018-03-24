@@ -69,7 +69,8 @@ export default class App extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
-                <Menu style={styles.container} config={CONFIG} onSelectMenu={this.onSelectMenu} navigation={this.props.navigation}/>
+                <Menu style={styles.container} config={CONFIG} onSelectMenu={this.onSelectMenu}
+                      navigation={this.props.navigation}/>
                 {/*<TouchableOpacity>
                     <Text
                         style={styles.text}>subindex:{this.state.subindex} title:{this.state.data.title}</Text>

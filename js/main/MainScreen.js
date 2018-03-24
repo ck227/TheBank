@@ -44,6 +44,17 @@ const MainTabNavigator = TabNavigator({
             headerTitleStyle: {
                 color: 'white'
             },
+            /*tabBarIcon: ({tintColor, focused}) => (
+                focused ?
+                    <Image
+                        source={require('../news/img/news_fill.png')}
+                        style={[styles.icon]}
+                    /> :
+                    <Image
+                        source={require('../news/img/news.png')}
+                        style={[styles.icon, {tintColor: tintColor}]}
+                    />
+            ),*/
             tabBarIcon: ({tintColor}) => (
                 <Image
                     source={require('../news/img/news.png')}
@@ -67,6 +78,18 @@ const MainTabNavigator = TabNavigator({
                 color: 'white'
             },
 
+            /*tabBarIcon: ({tintColor, focused}) => (
+                focused ?
+                    <Image
+                        source={require('../cards/img/cards_fill.png')}
+                        style={[styles.icon]}
+                    /> :
+                    <Image
+                        source={require('../cards/img/cards.png')}
+                        style={[styles.icon, {tintColor: tintColor}]}
+                    />
+            ),*/
+
             tabBarIcon: ({tintColor}) => (
                 <Image
                     source={require('../cards/img/cards.png')}
@@ -88,11 +111,23 @@ const MainTabNavigator = TabNavigator({
                 color: 'white'
             },
 
+            /*tabBarIcon: ({tintColor, focused}) => (
+                focused ?
+                    <Image
+                        source={require('../my/img/my_fill.png')}
+                        style={[styles.icon]}
+                    /> :
+                    <Image
+                        source={require('../my/img/my.png')}
+                        style={[styles.icon, {tintColor: tintColor}]}
+                    />
+            ),*/
+
             tabBarIcon: ({tintColor}) => (
-                <Image
-                    source={require('../my/img/my.png')}
-                    style={[styles.icon, {tintColor: tintColor}]}
-                />
+                    <Image
+                        source={require('../my/img/my.png')}
+                        style={[styles.icon, {tintColor: tintColor}]}
+                    />
             ),
         },
     },
