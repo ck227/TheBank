@@ -37,7 +37,94 @@ export default class App extends Component<Props> {
 
                     </View>
                 </TouchableOpacity>
-                <Text>11111</Text>
+                <View
+                    style={{
+                        height: 1,
+                        backgroundColor: "#CED0CE",
+                    }}
+                />
+                <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
+                    <View style={{flex: 1, alignItems: 'center', paddingTop: 12, paddingBottom: 12}}>
+                        <Text>介绍数</Text>
+                        <Text>0</Text>
+                    </View>
+                    <View
+                        style={{
+                            width: 1,
+                            backgroundColor: "#CED0CE",
+                        }}
+                    />
+                    <View style={{flex: 1, alignItems: 'center', paddingTop: 12, paddingBottom: 12}}>
+                        <Text>未结算</Text>
+                        <Text>0</Text>
+                    </View>
+                    <View
+                        style={{
+                            width: 1,
+                            backgroundColor: "#CED0CE",
+                        }}
+                    />
+                    <View style={{flex: 1, alignItems: 'center', paddingTop: 12, paddingBottom: 12}}>
+                        <Text>已结算</Text>
+                        <Text>0</Text>
+                    </View>
+                </View>
+                <View
+                    style={{
+                        height: 1,
+                        backgroundColor: "#CED0CE",
+                    }}
+                />
+
+                <View
+                    style={{
+                        height: 1,
+                        backgroundColor: "#CED0CE",
+                        marginTop: 12
+                    }}
+                />
+
+                <TouchableOpacity onPress={this._goSetPhone.bind(this)}>
+                    <View style={styles.items}>
+                        <Image
+                            source={require('./img/my_record.png')}
+                            style={styles.arrow}/>
+                        <Text style={{marginLeft: 12}}>申请记录</Text>
+                        <View style={{flex: 1, flexDirection: 'row-reverse'}}>
+                            <Image
+                                source={require('./img/arrow.png')}
+                                style={styles.arrow}/>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+
+                <View
+                    style={{
+                        height: 1,
+                        backgroundColor: "#CED0CE",
+                    }}
+                />
+
+                <TouchableOpacity onPress={this._goSetPhone.bind(this)}>
+                    <View style={styles.items}>
+                        <Image
+                            source={require('./img/my_pos.png')}
+                            style={styles.arrow}/>
+                        <Text style={{marginLeft: 12}}>我的POS机</Text>
+                        <View style={{flex: 1, flexDirection: 'row-reverse'}}>
+                            <Image
+                                source={require('./img/arrow.png')}
+                                style={styles.arrow}/>
+                        </View>
+                    </View>
+                </TouchableOpacity>
+
+                <View
+                    style={{
+                        height: 1,
+                        backgroundColor: "#CED0CE",
+                    }}
+                />
             </View>
         );
     }
@@ -46,16 +133,20 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#ebebeb',
     },
     phoneParent: {
         flexDirection: 'row',
-        padding: 24
+        padding: 24,
+        backgroundColor: 'white'
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+    items: {
+        flexDirection: 'row',
+        paddingLeft: 24,
+        paddingRight: 24,
+        paddingTop: 16,
+        paddingBottom: 16,
+        backgroundColor: 'white'
     },
     arrow: {
         height: 20,

@@ -1,34 +1,43 @@
 "use strict";
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet,
     Text,
+    Image,
+    TextInput,
     View
 } from 'react-native';
-
-const instructions = Platform.select({
-    ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-    android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
 type Props = {};
 export default class App extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Welcome to React Native!
-                </Text>
-                <Text style={styles.instructions}>
-                    To get started, edit App.js
-                </Text>
-                <Text style={styles.instructions}>
-                    {instructions}
-                </Text>
+                <Text style={{margin: 16}}>手机号</Text>
+
+                <View style={styles.textInput}>
+                    <Image
+                        source={require('../img/my_phone.png')}
+                        style={styles.icon}/>
+
+                    <TextInput style={{flex: 1}}
+                               editable={true}
+                    />
+                </View>
+
+                <Text style={{margin: 16}}>短信验证码</Text>
+
+                <View style={styles.textInput}>
+                    <Image
+                        source={require('../img/my_code.png')}
+                        style={styles.icon}/>
+
+                    <TextInput style={{flex: 1}}
+                               editable={true}
+                    />
+                </View>
             </View>
         );
     }
@@ -37,18 +46,20 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: 'white',
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+    icon: {
+        height: 24,
+        width: 24
     },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
+    textInput: {
+        flexDirection: 'row',
+        marginLeft: 16,
+        marginRight: 16,
+        borderColor: '#CED0CE',
+        borderWidth: 1,
+        borderRadius: 4,
+        padding: 8
+    }
+
 });
