@@ -11,12 +11,33 @@ import {
 } from 'react-native';
 
 import BindPhoneScreen from './phone/BindPhoneScreen'
+import IntroRecordScreen from './introduce/IntroRecordScreen'
+import CardRecordScreen from './card/CardRecordScreen'
+import PosScreen from './pos/PosScreen'
 
 type Props = {};
 export default class App extends Component<Props> {
 
     _goSetPhone = () => {
         this.props.navigation.navigate('BindPhoneScreen', {
+            // newsId: item.newsId,
+        })
+    };
+
+    _goIntroRecord = () => {
+        this.props.navigation.navigate('IntroRecordScreen', {
+            // newsId: item.newsId,
+        })
+    };
+
+    _goCardRecord = () => {
+        this.props.navigation.navigate('CardRecordScreen', {
+            // newsId: item.newsId,
+        })
+    };
+
+    _goPosRecord = () => {
+        this.props.navigation.navigate('PosScreen', {
             // newsId: item.newsId,
         })
     };
@@ -44,30 +65,42 @@ export default class App extends Component<Props> {
                     }}
                 />
                 <View style={{flexDirection: 'row', backgroundColor: 'white'}}>
-                    <View style={{flex: 1, alignItems: 'center', paddingTop: 12, paddingBottom: 12}}>
-                        <Text>介绍数</Text>
-                        <Text>0</Text>
-                    </View>
+
+                    <TouchableOpacity onPress={this._goIntroRecord.bind(this)}
+                                      style={{flex: 1, alignItems: 'center', paddingTop: 12, paddingBottom: 12}}>
+                        <View style={{alignItems: 'center'}}>
+                            <Text>介绍数</Text>
+                            <Text>0</Text>
+                        </View>
+                    </TouchableOpacity>
+
                     <View
                         style={{
                             width: 1,
                             backgroundColor: "#CED0CE",
                         }}
                     />
-                    <View style={{flex: 1, alignItems: 'center', paddingTop: 12, paddingBottom: 12}}>
-                        <Text>未结算</Text>
-                        <Text>0</Text>
-                    </View>
+                    <TouchableOpacity onPress={this._goIntroRecord.bind(this)}
+                                      style={{flex: 1, alignItems: 'center', paddingTop: 12, paddingBottom: 12}}>
+                        <View style={{alignItems: 'center'}}>
+                            <Text>未结算</Text>
+                            <Text>0</Text>
+                        </View>
+                    </TouchableOpacity>
+
                     <View
                         style={{
                             width: 1,
                             backgroundColor: "#CED0CE",
                         }}
                     />
-                    <View style={{flex: 1, alignItems: 'center', paddingTop: 12, paddingBottom: 12}}>
-                        <Text>已结算</Text>
-                        <Text>0</Text>
-                    </View>
+                    <TouchableOpacity onPress={this._goIntroRecord.bind(this)}
+                                      style={{flex: 1, alignItems: 'center', paddingTop: 12, paddingBottom: 12}}>
+                        <View style={{alignItems: 'center'}}>
+                            <Text>已结算</Text>
+                            <Text>0</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
                 <View
                     style={{
@@ -84,7 +117,7 @@ export default class App extends Component<Props> {
                     }}
                 />
 
-                <TouchableOpacity onPress={this._goSetPhone.bind(this)}>
+                <TouchableOpacity onPress={this._goCardRecord.bind(this)}>
                     <View style={styles.items}>
                         <Image
                             source={require('./img/my_record.png')}
@@ -105,7 +138,7 @@ export default class App extends Component<Props> {
                     }}
                 />
 
-                <TouchableOpacity onPress={this._goSetPhone.bind(this)}>
+                <TouchableOpacity onPress={this._goPosRecord.bind(this)}>
                     <View style={styles.items}>
                         <Image
                             source={require('./img/my_pos.png')}

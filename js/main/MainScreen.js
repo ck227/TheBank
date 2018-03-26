@@ -21,6 +21,9 @@ import CardDetailScreen from '../cards/CardDetaiScreen'
 
 import MyScreen from '../my/MyScreen'
 import BindPhoneScreen from '../my/phone/BindPhoneScreen'
+import IntroRecordScreen from '../my/introduce/IntroRecordScreen'
+import CardRecordScreen from '../my/card/CardRecordScreen'
+import PosScreen from '../my/pos/PosScreen'
 
 import {constants} from "../network/constants";
 
@@ -124,10 +127,10 @@ const MainTabNavigator = TabNavigator({
             ),*/
 
             tabBarIcon: ({tintColor}) => (
-                    <Image
-                        source={require('../my/img/my.png')}
-                        style={[styles.icon, {tintColor: tintColor}]}
-                    />
+                <Image
+                    source={require('../my/img/my.png')}
+                    style={[styles.icon, {tintColor: tintColor}]}
+                />
             ),
         },
     },
@@ -179,6 +182,24 @@ const MainStackNavigator = StackNavigator({
         screen: BindPhoneScreen,
         navigationOptions: {
             headerTitle: '手机号绑定',
+        }
+    },
+    IntroRecordScreen: {
+        screen: IntroRecordScreen,
+        navigationOptions: {
+            headerTitle: '介绍记录',
+        }
+    },
+    CardRecordScreen: {
+        screen: CardRecordScreen,
+        navigationOptions: {
+            headerTitle: '申请记录',
+        }
+    },
+    PosScreen: {
+        screen: PosScreen,
+        navigationOptions: {
+            headerTitle: '我的POS机',
         }
     },
 
