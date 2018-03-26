@@ -1,34 +1,87 @@
 "use strict";
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
     Platform,
     StyleSheet,
     Text,
+    TextInput,
     View
 } from 'react-native';
 
-const instructions = Platform.select({
-    ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-    android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import {constants} from "../../network/constants";
 
 type Props = {};
 export default class App extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Welcome to React Native!
-                </Text>
-                <Text style={styles.instructions}>
-                    To get started, edit App.js
-                </Text>
-                <Text style={styles.instructions}>
-                    {instructions}
-                </Text>
+                <Text style={{marginTop: 24, marginLeft: 24}}>姓名</Text>
+
+                <TextInput style={{
+                    marginLeft: 24,
+                    marginRight: 24,
+                    marginTop: 8,
+                    borderColor: '#CED0CE',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    paddingLeft: 8,
+                    height: 48
+                }}
+                           editable={true}
+                           underlineColorAndroid={'transparent'}
+
+                />
+                <Text style={{marginTop: 24, marginLeft: 24}}>POS机编码</Text>
+
+                <TextInput style={{
+                    marginLeft: 24,
+                    marginRight: 24,
+                    marginTop: 8,
+                    borderColor: '#CED0CE',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    paddingLeft: 8,
+                    height: 48
+                }}
+                           editable={true}
+                           underlineColorAndroid={'transparent'}
+
+                />
+                <Text style={{marginTop: 24, marginLeft: 24}}>客户电话</Text>
+
+                <TextInput style={{
+                    marginLeft: 24,
+                    marginRight: 24,
+                    marginTop: 8,
+                    borderColor: '#CED0CE',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    paddingLeft: 8,
+                    height: 48
+                }}
+                           editable={true}
+                           underlineColorAndroid={'transparent'}
+
+                />
+                <Text style={{marginTop: 24, marginLeft: 24}}>地区</Text>
+
+                <TextInput style={{
+                    marginLeft: 24,
+                    marginRight: 24,
+                    marginTop: 8,
+                    borderColor: '#CED0CE',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    paddingLeft: 8,
+                    height: 48
+                }}
+                           editable={true}
+                           underlineColorAndroid={'transparent'}
+
+                />
+
+                <Text style={styles.button}>绑定手机</Text>
             </View>
         );
     }
@@ -37,18 +90,20 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: 'white',
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
-    instructions: {
-        textAlign: 'center',
-        color: '#333333',
-        marginBottom: 5,
-    },
+    button: {
+        marginTop: 48,
+        color: 'white',
+        backgroundColor: constants.baseColor,
+        paddingTop: 14,
+        paddingBottom: 14,
+        paddingLeft: 48,
+        paddingRight: 48,
+        marginLeft: 16,
+        marginRight: 16,
+        alignSelf: 'center',
+        borderRadius: 4
+    }
+
 });
