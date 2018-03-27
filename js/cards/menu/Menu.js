@@ -159,7 +159,8 @@ export default class TopMenu extends Component {
             fadeInOpacity: new Animated.Value(0),
             selectedIndex: null,
 
-            news: [],
+            bankId: '',
+            cards: [],
             page: 1,
             loading: false,
             refreshing: false,
@@ -167,7 +168,7 @@ export default class TopMenu extends Component {
     }
 
     componentDidMount() {
-        this.getNews()
+        this.getCards()
     }
 
     createAnimation = (index, height) => {
@@ -281,7 +282,7 @@ export default class TopMenu extends Component {
                 {/*{this.props.renderContent()}*/}
 
                 <FlatList
-                    data={this.state.news}
+                    data={this.state.cards}
                     renderItem={({item}) => (
 
                         <TouchableOpacity onPress={this._itemClick.bind(this, item)}>
@@ -290,12 +291,12 @@ export default class TopMenu extends Component {
                                 <View style={styles.container2}>
 
                                     <View style={styles.leftContainer}>
-                                        <Text numberOfLines={2} style={styles.title}>{item.shortTitle}</Text>
-                                        <Text style={styles.time}>{item.issueTime}</Text>
+                                        <Text numberOfLines={1} style={styles.title}>{item.cardName}</Text>
+                                        <Text numberOfLines={2} style={styles.time}>{item.cardDesc}</Text>
                                     </View>
 
                                     <Image
-                                        source={{uri: constants.PicUrl + item.thumbPath}}
+                                        source={{uri: constants.PicUrl + item.imgPatch}}
                                         style={styles.thumbnail}/>
                                 </View>
 
@@ -346,14 +347,14 @@ export default class TopMenu extends Component {
 
 
     //下面的是列表
-    getNews = () => {
-        var url = `${constants.url}?service=news.list&pageNo=${this.state.page}&parent=25`
+    getCards = () => {
+        var url = `${constants.url + 'bankcardFront/listBean.html'}?bankId=${this.state.bankId}&pageNo=${this.state.page}`
         this.setState({loading: true});
         fetch(url)
             .then(res => res.json())
             .then(res => {
                 this.setState({
-                    news: this.state.page === 1 ? res.resultData : [...this.state.news, ...res.resultData],
+                    cards: this.state.page === 1 ? res.list : [...this.state.cards, ...res.list],
                     loading: false,
                     refreshing: false,
                 });
@@ -370,7 +371,7 @@ export default class TopMenu extends Component {
                 refreshing: true
             },
             () => {
-                this.getNews();
+                this.getCards();
             }
         );
     };
@@ -381,7 +382,7 @@ export default class TopMenu extends Component {
                 page: this.state.page + 1
             },
             () => {
-                this.getNews();
+                this.getCards();
             }
         );
     };
@@ -405,8 +406,6 @@ export default class TopMenu extends Component {
             // newsId: item.newsId,
         })
     };
-
-
 
 
 }

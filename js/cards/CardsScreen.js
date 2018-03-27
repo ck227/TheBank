@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: width,
-        backgroundColor: '#F5FCFF',
+        backgroundColor: 'transparent',
     },
     text: {
         fontSize: 20,

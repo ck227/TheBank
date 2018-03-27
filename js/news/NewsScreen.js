@@ -34,13 +34,13 @@ export default class App extends Component<Props> {
     }
 
     getNews = () => {
-        var url = `${constants.url}?service=news.list&pageNo=${this.state.page}&parent=25`
+        var url = `${constants.url+'articleinfoFront/listBean.html'}?pageNo=${this.state.page}`
         this.setState({loading: true});
         fetch(url)
             .then(res => res.json())
             .then(res => {
                 this.setState({
-                    news: this.state.page === 1 ? res.resultData : [...this.state.news, ...res.resultData],
+                    news: this.state.page === 1 ? res.list : [...this.state.news, ...res.list],
                     loading: false,
                     refreshing: false,
                 });
@@ -106,12 +106,12 @@ export default class App extends Component<Props> {
                                 <View style={styles.container2}>
 
                                     <View style={styles.leftContainer}>
-                                        <Text numberOfLines={2} style={styles.title}>{item.shortTitle}</Text>
-                                        <Text style={styles.time}>{item.issueTime}</Text>
+                                        <Text numberOfLines={2} style={styles.title}>{item.title}</Text>
+                                        <Text style={styles.time}>{item.releaseTime}</Text>
                                     </View>
 
                                     <Image
-                                        source={{uri: constants.PicUrl + item.thumbPath}}
+                                        source={{uri: constants.PicUrl + item.imgUrl}}
                                         style={styles.thumbnail}/>
                                 </View>
 

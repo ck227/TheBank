@@ -165,7 +165,7 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ebebeb',
+        backgroundColor: 'transparent',
     },
     phoneParent: {
         flexDirection: 'row',
