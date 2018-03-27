@@ -182,8 +182,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     icon: {
-        height: 26,
-        width: 26
+        height: 28,
+        width: 28
     },
     arrow: {
         height: 20,

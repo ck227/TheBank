@@ -34,7 +34,7 @@ export default class App extends Component<Props> {
     }
 
     getNews = () => {
-        var url = `${constants.url+'articleinfoFront/listBean.html'}?pageNo=${this.state.page}`
+        var url = `${constants.url + 'articleinfoFront/listBean.html'}?pageNo=${this.state.page}`
         this.setState({loading: true});
         fetch(url)
             .then(res => res.json())
@@ -68,6 +68,8 @@ export default class App extends Component<Props> {
                 page: this.state.page + 1
             },
             () => {
+                // if (this.state.news.length > 9)
+                // if (!this.state.loading)
                 this.getNews();
             }
         );
@@ -145,8 +147,8 @@ export default class App extends Component<Props> {
                     keyExtractor={(item, index) => index.toString()}
                     ListHeaderComponent={this.renderHeader}
                     ListFooterComponent={this.renderFooter}
-                    onEndReached={this.handleLoadMore}
-                    //onEndReachedThreshold={15}
+                    onEndReached={this.state.news.length > 9 ? this.handleLoadMore : null}
+                    onEndReachedThreshold={0.1}
                 />
             </View>
         );

@@ -330,8 +330,8 @@ export default class TopMenu extends Component {
                     keyExtractor={(item, index) => index.toString()}
                     ListHeaderComponent={this.renderHeader}
                     ListFooterComponent={this.renderFooter}
-                    onEndReached={this.handleLoadMore}
-                    //onEndReachedThreshold={15}
+                    onEndReached={this.state.cards.length > 9 ? this.handleLoadMore : null}
+                    onEndReachedThreshold={0.1}
                 />
 
 
