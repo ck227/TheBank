@@ -21,64 +21,65 @@ export default class App extends Component<Props> {
                 <TextInput style={{
                     marginLeft: 24,
                     marginRight: 24,
-                    marginTop: 8,
+                    marginTop: 6,
                     borderColor: '#CED0CE',
                     borderWidth: 1,
                     borderRadius: 4,
                     paddingLeft: 8,
-                    height: 48
+                    height: 42
                 }}
                            editable={true}
                            underlineColorAndroid={'transparent'}
 
                 />
-                <Text style={{marginTop: 24, marginLeft: 24}}>POS机编码</Text>
+                <Text style={{marginTop: 16, marginLeft: 24}}>POS机编码</Text>
 
                 <TextInput style={{
                     marginLeft: 24,
                     marginRight: 24,
-                    marginTop: 8,
+                    marginTop: 6,
                     borderColor: '#CED0CE',
                     borderWidth: 1,
                     borderRadius: 4,
                     paddingLeft: 8,
-                    height: 48
+                    height: 42
                 }}
                            editable={true}
                            underlineColorAndroid={'transparent'}
+                           keyboardType={'phone-pad'}
 
                 />
-                <Text style={{marginTop: 24, marginLeft: 24}}>客户电话</Text>
+                <Text style={{marginTop: 16, marginLeft: 24}}>客户电话</Text>
 
                 <TextInput style={{
                     marginLeft: 24,
                     marginRight: 24,
-                    marginTop: 8,
+                    marginTop: 6,
                     borderColor: '#CED0CE',
                     borderWidth: 1,
                     borderRadius: 4,
                     paddingLeft: 8,
-                    height: 48
+                    height: 42
                 }}
                            editable={true}
                            underlineColorAndroid={'transparent'}
+                           keyboardType={'phone-pad'}
 
                 />
-                <Text style={{marginTop: 24, marginLeft: 24}}>地区</Text>
+                <Text style={{marginTop: 16, marginLeft: 24}}>地区</Text>
 
                 <TextInput style={{
                     marginLeft: 24,
                     marginRight: 24,
-                    marginTop: 8,
+                    marginTop: 6,
                     borderColor: '#CED0CE',
                     borderWidth: 1,
                     borderRadius: 4,
                     paddingLeft: 8,
-                    height: 48
+                    height: 42
                 }}
                            editable={true}
                            underlineColorAndroid={'transparent'}
-
                 />
 
                 <Text style={styles.button}>绑定手机</Text>

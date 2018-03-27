@@ -121,7 +121,7 @@ export default class App extends Component<Props> {
                     <View style={styles.items}>
                         <Image
                             source={require('./img/my_record.png')}
-                            style={styles.arrow}/>
+                            style={styles.icon}/>
                         <Text style={{marginLeft: 12}}>申请记录</Text>
                         <View style={{flex: 1, flexDirection: 'row-reverse'}}>
                             <Image
@@ -142,7 +142,7 @@ export default class App extends Component<Props> {
                     <View style={styles.items}>
                         <Image
                             source={require('./img/my_pos.png')}
-                            style={styles.arrow}/>
+                            style={styles.icon}/>
                         <Text style={{marginLeft: 12}}>我的POS机</Text>
                         <View style={{flex: 1, flexDirection: 'row-reverse'}}>
                             <Image
@@ -156,8 +156,7 @@ export default class App extends Component<Props> {
                     style={{
                         height: 1,
                         backgroundColor: "#CED0CE",
-                    }}
-                />
+                    }}/>
             </View>
         );
     }
@@ -175,11 +174,16 @@ const styles = StyleSheet.create({
     },
     items: {
         flexDirection: 'row',
+        alignItems:'center',
         paddingLeft: 24,
         paddingRight: 24,
         paddingTop: 16,
         paddingBottom: 16,
         backgroundColor: 'white'
+    },
+    icon: {
+        height: 26,
+        width: 26
     },
     arrow: {
         height: 20,
