@@ -85,9 +85,9 @@ const Subtitle = (props) => {
             <View style={styles.tableItem}>
                 <View style={styles.row}>
                     {props.selected && <Check/>}
-                    <Text style={textStyle}>{props.data.title}</Text>
+                    <Text style={textStyle}>{props.data.bankName}</Text>
                 </View>
-                <Text style={rightTextStyle}>{props.data.subtitle}</Text>
+                <Text style={rightTextStyle}>{props.data.id}</Text>
             </View>
         </TouchableHighlight>
     );
@@ -107,7 +107,7 @@ const Title = (props) => {
         <TouchableHighlight onPress={onPress} underlayColor="#f5f5f5">
             <View style={styles.titleItem}>
                 {props.selected && <Check/>}
-                <Text style={textStyle}>{props.data.title}</Text>
+                <Text style={textStyle}>{props.data.bankName}</Text>
             </View>
         </TouchableHighlight>
     );
@@ -144,7 +144,7 @@ export default class TopMenu extends Component {
         var max = parseInt((height - 80) * 0.8 / 43);
         for (let i = 0, c = array.length; i < c; ++i) {
             let item = array[i];
-            top[i] = item.data[item.selectedIndex].title;
+            top[i] = item.data[item.selectedIndex].bankName;
             maxHeight[i] = Math.min(item.data.length, max) * 43;
             subselected[i] = item.selectedIndex;
             height[i] = new Animated.Value(0);
@@ -159,6 +159,7 @@ export default class TopMenu extends Component {
             fadeInOpacity: new Animated.Value(0),
             selectedIndex: null,
 
+            config:array,
             bankId: '',
             cards: [],
             page: 1,
@@ -168,6 +169,7 @@ export default class TopMenu extends Component {
     }
 
     componentDidMount() {
+        this.getBanks()
         this.getCards()
     }
 
@@ -205,11 +207,24 @@ export default class TopMenu extends Component {
         let opts = {selectedIndex: null, current: index};
         if (subselected !== undefined) {
             this.state.subselected[index] = subselected;
-            this.state.top[index] = this.props.config[index].data[subselected].title;
+            this.state.top[index] = this.state.config[index].data[subselected].bankName;
+
+            this.state.bankId = this.state.config[index].data[subselected].id
+            this.setState(
+                {
+                    page: 1,
+                    refreshing: true
+                },
+                () => {
+                    this.getCards();
+                }
+            );
+
             opts = {selectedIndex: null, current: index, subselected: this.state.subselected.concat()};
         }
         this.setState(opts);
         this.onHide(index);
+
     }
 
 
@@ -264,7 +279,7 @@ export default class TopMenu extends Component {
     render() {
         let list = null;
         if (this.state.selectedIndex !== null) {
-            list = this.props.config[this.state.selectedIndex].data;
+            list = this.state.config[this.state.selectedIndex].data;
         }
         console.log(list);
         return (
@@ -330,14 +345,14 @@ export default class TopMenu extends Component {
                     keyExtractor={(item, index) => index.toString()}
                     ListHeaderComponent={this.renderHeader}
                     ListFooterComponent={this.renderFooter}
-                    onEndReached={this.state.cards.length > 9 ? this.handleLoadMore : null}
+                    onEndReached={this.state.cards != null && this.state.cards.length > 9 ? this.handleLoadMore : null}
                     onEndReachedThreshold={0.1}
                 />
 
 
                 <View style={styles.bgContainer} pointerEvents={this.state.selectedIndex !== null ? "auto" : "none"}>
                     <Animated.View style={[styles.bg, {opacity: this.state.fadeInOpacity}]}/>
-                    {this.props.config.map((d, index) => {
+                    {this.state.config.map((d, index) => {
                         return this.renderList(d, index);
                     })}
                 </View>
@@ -345,6 +360,20 @@ export default class TopMenu extends Component {
         );
     }
 
+    //下面的是银行
+    getBanks = () => {
+        var url = `${constants.url + 'bankFront/listBean.html'}`
+        // this.setState({loading: true});
+        fetch(url)
+            .then(res => res.json())
+            .then(res => {
+                // this.state.config[0].data = [this.state.config[0].data,...res.list]
+                this.state.config[0].data.push(...res.list)
+            })
+            .catch(error => {
+                // this.setState({error, loading: false});
+            });
+    }
 
     //下面的是列表
     getCards = () => {

@@ -27,14 +27,14 @@ const CONFIG = [
         type: 'subtitle',
         selectedIndex: 0,
         data: [
-            {title: '全部银行', subtitle: ''},//1000
-            {title: '中国银行', subtitle: ''},
-            {title: '中国工商银行', subtitle: ''},
-            {title: '中国农业银行', subtitle: ''},
-            {title: '光大银行', subtitle: ''},
-            {title: '招商银行', subtitle: ''},
-            {title: '民生银行', subtitle: ''},
-            {title: '广发银行', subtitle: ''},
+            {bankName: '全部银行', id: ''},//1000
+            // {title: '中国银行', subtitle: ''},
+            // {title: '中国工商银行', subtitle: ''},
+            // {title: '中国农业银行', subtitle: ''},
+            // {title: '光大银行', subtitle: ''},
+            // {title: '招商银行', subtitle: ''},
+            // {title: '民生银行', subtitle: ''},
+            // {title: '广发银行', subtitle: ''},
         ]
     },
     // {
