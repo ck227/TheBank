@@ -21,6 +21,7 @@ import {
 
 import {constants} from "../../network/constants";
 import NewsDetailScreen from '../CardDetaiScreen'
+import NoDataScreen from '../../common/NoDataScreen'
 
 const {Surface, Shape, Path, Group} = ART;
 const {width, height} = Dimensions.get('window');
@@ -29,6 +30,7 @@ const T_HEIGHT = 4;//三角形的高
 const COLOR_HIGH = constants.baseColor;
 const COLOR_NORMAL = '#6c6c6c';
 const LINE = 1 / PixelRatio.get();
+
 
 class Triangle extends React.Component {//三角形
 
@@ -159,7 +161,7 @@ export default class TopMenu extends Component {
             fadeInOpacity: new Animated.Value(0),
             selectedIndex: null,
 
-            config:array,
+            config: array,
             bankId: '',
             cards: [],
             page: 1,
@@ -294,60 +296,63 @@ export default class TopMenu extends Component {
                             selected={this.state.selectedIndex === index}/>
                     })}
                 </View>
-                {/*{this.props.renderContent()}*/}
 
-                <FlatList
-                    data={this.state.cards}
-                    renderItem={({item}) => (
+                {this.state.cards === null || this.state.cards.length === 0 ?
+                    <NoDataScreen/>
+                    :
+                    <FlatList
+                        data={this.state.cards}
+                        renderItem={({item}) => (
 
-                        <TouchableOpacity onPress={this._itemClick.bind(this, item)}>
-                            <View style={styles.listItem}>
+                            <TouchableOpacity onPress={this._itemClick.bind(this, item)}>
+                                <View style={styles.listItem}>
 
-                                <View style={styles.container2}>
+                                    <View style={styles.container2}>
 
-                                    <View style={styles.leftContainer}>
-                                        <Text numberOfLines={1} style={styles.title}>{item.cardName}</Text>
-                                        <Text numberOfLines={2} style={styles.time}>{item.cardDesc}</Text>
+                                        <View style={styles.leftContainer}>
+                                            <Text numberOfLines={1} style={styles.title}>{item.cardName}</Text>
+                                            <Text numberOfLines={2} style={styles.time}>{item.cardDesc}</Text>
+                                        </View>
+
+                                        <Image
+                                            source={{uri: constants.PicUrl + item.imgPatch}}
+                                            style={styles.thumbnail}/>
                                     </View>
 
-                                    <Image
-                                        source={{uri: constants.PicUrl + item.imgPatch}}
-                                        style={styles.thumbnail}/>
                                 </View>
-
-                            </View>
-                        </TouchableOpacity>
-                    )}
-                    ItemSeparatorComponent={() =>
-                        <View style={{flex: 1, flexDirection: 'row-reverse'}}>
-                            {/*<View
+                            </TouchableOpacity>
+                        )}
+                        ItemSeparatorComponent={() =>
+                            <View style={{flex: 1, flexDirection: 'row-reverse'}}>
+                                {/*<View
                                 style={{
                                     height: 1,
                                     width: 120,
                                     backgroundColor: 'white'
                                 }}/>*/}
-                            <View
-                                style={{
-                                    height: 1,
-                                    backgroundColor: "#CED0CE",
-                                }}
-                            />
+                                <View
+                                    style={{
+                                        height: 1,
+                                        backgroundColor: "#CED0CE",
+                                    }}
+                                />
 
-                        </View>
-                    }
-                    refreshControl={
-                        <RefreshControl
-                            colors={[constants.baseColor]}
-                            refreshing={this.state.refreshing}
-                            onRefresh={this.handleRefresh}
-                        />
-                    }
-                    keyExtractor={(item, index) => index.toString()}
-                    ListHeaderComponent={this.renderHeader}
-                    ListFooterComponent={this.renderFooter}
-                    onEndReached={this.state.cards != null && this.state.cards.length > 9 ? this.handleLoadMore : null}
-                    onEndReachedThreshold={0.1}
-                />
+                            </View>
+                        }
+                        refreshControl={
+                            <RefreshControl
+                                colors={[constants.baseColor]}
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.handleRefresh}
+                            />
+                        }
+                        keyExtractor={(item, index) => index.toString()}
+                        ListHeaderComponent={this.renderHeader}
+                        ListFooterComponent={this.renderFooter}
+                        onEndReached={this.state.cards != null && this.state.cards.length > 9 ? this.handleLoadMore : null}
+                        onEndReachedThreshold={0.1}
+                    />
+                }
 
 
                 <View style={styles.bgContainer} pointerEvents={this.state.selectedIndex !== null ? "auto" : "none"}>
@@ -496,6 +501,7 @@ const styles = StyleSheet.create({
     topMenu: {
         flexDirection: 'row',
         height: 48,
+        backgroundColor: 'white',
         borderTopWidth: LINE,
         borderTopColor: '#bdbdbd',
         borderBottomWidth: 1,

@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import NewsDetailScreen from './NewsDetailScreen'
+import NoDataScreen from '../common/NoDataScreen'
 import {constants} from "../network/constants";
 
 type Props = {};
@@ -91,65 +92,69 @@ export default class App extends Component<Props> {
 
     _itemClick = (item) => {
         this.props.navigation.navigate('NewsDetailScreen', {
-            // newsId: item.newsId,
+            id: item.id,
         })
     };
 
     render() {
         return (
             <View style={styles.container}>
-                <FlatList
-                    data={this.state.news}
-                    renderItem={({item}) => (
+                {this.state.news === null || this.state.news.length === 0 ?
+                    <NoDataScreen/>
+                    :
+                    <FlatList
+                        data={this.state.news}
+                        renderItem={({item}) => (
 
-                        <TouchableOpacity onPress={this._itemClick.bind(this, item)}>
-                            <View style={styles.item}>
+                            <TouchableOpacity onPress={this._itemClick.bind(this, item)}>
+                                <View style={styles.item}>
 
-                                <View style={styles.container2}>
+                                    <View style={styles.container2}>
 
-                                    <View style={styles.leftContainer}>
-                                        <Text numberOfLines={2} style={styles.title}>{item.title}</Text>
-                                        <Text style={styles.time}>{item.releaseTime}</Text>
+                                        <View style={styles.leftContainer}>
+                                            <Text numberOfLines={2} style={styles.title}>{item.title}</Text>
+                                            <Text style={styles.time}>{item.releaseTime}</Text>
+                                        </View>
+
+                                        <Image
+                                            source={{uri: constants.PicUrl + item.imgUrl}}
+                                            style={styles.thumbnail}/>
                                     </View>
 
-                                    <Image
-                                        source={{uri: constants.PicUrl + item.imgUrl}}
-                                        style={styles.thumbnail}/>
                                 </View>
-
-                            </View>
-                        </TouchableOpacity>
-                    )}
-                    ItemSeparatorComponent={() =>
-                        <View style={{flex: 1, flexDirection: 'row-reverse'}}>
-                            {/*<View
+                            </TouchableOpacity>
+                        )}
+                        ItemSeparatorComponent={() =>
+                            <View style={{flex: 1, flexDirection: 'row-reverse'}}>
+                                {/*<View
                                 style={{
                                     height: 1,
                                     width: 120,
                                     backgroundColor: 'white'
                                 }}/>*/}
-                            <View
-                                style={{
-                                    height: 1,
-                                    backgroundColor: "#CED0CE",
-                                }}
-                            />
+                                <View
+                                    style={{
+                                        height: 1,
+                                        backgroundColor: "#CED0CE",
+                                    }}
+                                />
 
-                        </View>
-                    }
-                    refreshControl={
-                        <RefreshControl
-                            colors={[constants.baseColor]}
-                            refreshing={this.state.refreshing}
-                            onRefresh={this.handleRefresh}
-                        />
-                    }
-                    keyExtractor={(item, index) => index.toString()}
-                    ListHeaderComponent={this.renderHeader}
-                    ListFooterComponent={this.renderFooter}
-                    onEndReached={this.state.news.length > 9 ? this.handleLoadMore : null}
-                    onEndReachedThreshold={0.1}
-                />
+                            </View>
+                        }
+                        refreshControl={
+                            <RefreshControl
+                                colors={[constants.baseColor]}
+                                refreshing={this.state.refreshing}
+                                onRefresh={this.handleRefresh}
+                            />
+                        }
+                        keyExtractor={(item, index) => index.toString()}
+                        ListHeaderComponent={this.renderHeader}
+                        ListFooterComponent={this.renderFooter}
+                        onEndReached={this.state.news.length > 9 ? this.handleLoadMore : null}
+                        onEndReachedThreshold={0.1}
+                    />
+                }
             </View>
         );
     }
