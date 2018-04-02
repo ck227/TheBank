@@ -13,7 +13,7 @@ export const constants = {
  *
  * 1.线上特惠暂无数据界面 (好了)
  * 2.金融产品暂无数据界面 （好了）
- * 3.卡片详情界面
+ * 3.卡片详情界面   http://47.106.87.16:8080/zxtFinancial/bankcardFront/detailsBean.html?id=1
  * http://192.168.100.222:8080/zxtFinancial/bankcardruleFront/isSubmit.html?userId=1&bankCardId=1   判断是否提交过申请
  * 4.申请卡片    http://192.168.100.222:8080/zxtFinancial/bankcardruleFront/listBean.html?bankCardId=1
  * 5.绑定/解除绑定手机

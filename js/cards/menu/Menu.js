@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 
 import {constants} from "../../network/constants";
-import NewsDetailScreen from '../CardDetaiScreen'
+import CardDetailScreen from '../CardDetaiScreen'
 import NoDataScreen from '../../common/NoDataScreen'
 
 const {Surface, Shape, Path, Group} = ART;
@@ -123,11 +123,11 @@ const Check = () => {
         >
             <Group scale={0.03}>
 
-                    <Shape
-                        fill={COLOR_HIGH}
-                        d={`M494,52c-13-13-33-13-46,0L176,324L62,211c-13-13-33-13-46,0s-13,33,0,46l137,136c6,6,15,10,23,10s17-4,23-10L494,99
+                <Shape
+                    fill={COLOR_HIGH}
+                    d={`M494,52c-13-13-33-13-46,0L176,324L62,211c-13-13-33-13-46,0s-13,33,0,46l137,136c6,6,15,10,23,10s17-4,23-10L494,99
       C507,86,507,65,494,52z`}
-                    />
+                />
 
             </Group>
         </Surface>
@@ -438,8 +438,8 @@ export default class TopMenu extends Component {
     };
 
     _itemClick = (item) => {
-        this.props.navigation.navigate('NewsDetailScreen', {
-            // newsId: item.newsId,
+        this.props.navigation.navigate('CardDetailScreen', {
+            id: item.id,
         })
     };
 
